@@ -9,27 +9,39 @@
 <body>
     <div class = 'container'>
         <nav>
-            <h1>Purchase Tracker</h1>
-            <p>Keep track of your spending</p>
+            <div class ='nav-header'>
+                <h1>Purchase Tracker</h1>
+                <p>Keep track of your spending</p>
+            </div>
             <ul>
-                <li>Mode</li>
-                <li>View All</li>
+                <li><img src="imgs/moon.png" alt="mode"class='mode-icon'></li>
+                <li><img src="imgs/list.png" alt="list"class='list-icon'>View All</li>
             </ul>
         </nav>
         <div class="total">
-            <p>Total Spend</p>
-            <span></span>
+            <div class="total-text">
+                <p>Total Spend</p>
+                <span>$0.00</span>
+            </div>
+            <div class="total-img">
+            <img src="imgs/shopping-bag.png" class="purchase-icon" alt="purchases">
+            </div>
         </div>
-        <form action="submit">
+        <form action="submit" class="form">
+
+            <div class="form-text">
             <h2>Add New Purchase</h2>
             <p>Enter Purchase details below</p>
+            </div>
+            <div class ="form-inputs"></div>
             <label for="purchase">Purchase Name</label>
-            <input id="purchase" type="text" placeholder="e.g., Groceries, Coffe, Gasand " >
+            <input id="purchase" type="text" placeholder="e.g., Groceries, Coffe, Gas " >
             <label for="amount">Amount</label>
             <input id="amount" type="text" placeholder="0.00">
             <label for="date">Date</label>
             <input id="date" type="date">
             <button type="submit">Add Purchase</button>
+            
         </form>
     </div>
 </body>

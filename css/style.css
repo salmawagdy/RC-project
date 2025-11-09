@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    min-height: 100vh; 
+    justify-content: center;
+    align-items: center;
+    background-color: #eff6ff;   
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    max-width: 1200px;
+    width:100%;
+    padding: 20px;
+}
+
+nav{
+    display:flex;
+    width:100%;
+    height:100px;
+}
+
+.nav-header{
+    width:70%;
+}
+
+nav h1{
+    color:#312e81;
+    font-size:30px;
+    font-weight: bold;
+    margin:25px;
+}
+
+nav p{
+    color:#4b5563;
+    margin-left:25px;
+    margin-top:-20px;
+}
+
+ul{
+    width:30%;
+    display:flex;
+    margin-top:30px;
+    justify-content: end;
+}
+
+ul li{
+    background-color:white;
+    list-style-type: none;
+    margin: 20px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
+}
+
+.mode-icon{
+    width:20px;
+    height:20px;
+}
+
+li:first-child{
+    width: 40px;
+}
+
+.list-icon{
+    width:20px;
+    height:20px;
+}
+
+li:nth-child(2){
+    width:120px;
+    gap: 8px;
+}
+
+.total{
+    width:100%;
+    height:130px;;
+    background-color:#4f46e5;
+    color:white;
+    border-radius: 15px;
+    display:flex;
+    margin-top:30px ;
+}
+.total-text{
+    width:70%;
+    margin:30px;
+}
+.total-text span{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.purchase-icon{
+    height:50px;
+    width:50px;
+}
+
+.total-img{
+    width:30%;
+    display:flex;
+    justify-content: end;
+    margin: 30px;
+}
+
+.form{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    width:100%;
+    margin-top:30px;
+    height: fit-content;
+    border:1px solid #b5b4c5;
+    border-radius: 15px;
+}
+.form-text{
+    display:flex;
+    width:90%;
+    flex-direction: column;
+    font-size:15px;
+    margin:25px;
+}
+h2{
+    color:#4f46e5;
+}
+
+.form-text p{
+    color:#4b5563;
+    margin-top:10px;
+}
+label{
+    margin-left:25px;
+    font-weight: bold;
+    font-size:20px;
+}
+input{
+    width:90%;
+    height:40px;
+    margin-left: 25px;
+    background-color: rgba(128, 128, 128, 0.116);
+    border-style:none;
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+button{
+    background-color:black;
+    color:white;
+    width:90%;
+    height:40px;
+    margin: 25px;
+    border-radius: 10px;
+}
