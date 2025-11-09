@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>My Tracker</title>
 </head>
+
 <body>
     <div class = 'container'>
         <nav>
@@ -15,7 +16,7 @@
             </div>
             <ul>
                 <li><img src="imgs/moon.png" alt="mode"class='mode-icon'></li>
-                <li><img src="imgs/list.png" alt="list"class='list-icon'>View All</li>
+                <li><img src="imgs/list.png" alt="list"class='list-icon'><a href="menu.html">View All</a></li>
             </ul>
         </nav>
         <div class="total">
@@ -24,16 +25,14 @@
                 <span>$0.00</span>
             </div>
             <div class="total-img">
-            <img src="imgs/shopping-bag.png" class="purchase-icon" alt="purchases">
+                <img src="imgs/shopping-bag.png" class="purchase-icon" alt="purchases">
             </div>
         </div>
         <form action="submit" class="form">
-
             <div class="form-text">
-            <h2>Add New Purchase</h2>
-            <p>Enter Purchase details below</p>
+                <h2>Add New Purchase</h2>
+                <p>Enter Purchase details below</p>
             </div>
-            <div class ="form-inputs"></div>
             <label for="purchase">Purchase Name</label>
             <input id="purchase" type="text" placeholder="e.g., Groceries, Coffe, Gas " >
             <label for="amount">Amount</label>
@@ -41,7 +40,6 @@
             <label for="date">Date</label>
             <input id="date" type="date">
             <button type="submit">Add Purchase</button>
-            
         </form>
     </div>
 </body>

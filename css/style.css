@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     display: flex;
     min-height: 100vh; 
@@ -59,7 +60,6 @@ ul li{
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-
 }
 
 .mode-icon{
@@ -68,7 +68,7 @@ ul li{
 }
 
 li:first-child{
-    width: 40px;
+    width: 50px;
 }
 
 .list-icon{
@@ -76,8 +76,13 @@ li:first-child{
     height:20px;
 }
 
+a{
+    text-decoration: none;
+    color:black;
+}
+
 li:nth-child(2){
-    width:120px;
+    width:150px;
     gap: 8px;
 }
 
@@ -90,10 +95,12 @@ li:nth-child(2){
     display:flex;
     margin-top:30px ;
 }
+
 .total-text{
     width:70%;
     margin:30px;
 }
+
 .total-text span{
     font-size: 30px;
     font-weight: bold;
@@ -122,6 +129,7 @@ li:nth-child(2){
     border:1px solid #b5b4c5;
     border-radius: 15px;
 }
+
 .form-text{
     display:flex;
     width:90%;
@@ -129,6 +137,7 @@ li:nth-child(2){
     font-size:15px;
     margin:25px;
 }
+
 h2{
     color:#4f46e5;
 }
@@ -136,14 +145,17 @@ h2{
 .form-text p{
     color:#4b5563;
     margin-top:10px;
+    margin-bottom:25px;
 }
+
 label{
     margin-left:25px;
     font-weight: bold;
     font-size:20px;
 }
+
 input{
-    width:90%;
+    width:95%;
     height:40px;
     margin-left: 25px;
     background-color: rgba(128, 128, 128, 0.116);
@@ -152,11 +164,72 @@ input{
     padding-left: 15px;
     padding-right: 15px;
 }
+
 button{
     background-color:black;
     color:white;
-    width:90%;
+    width:95%;
     height:40px;
     margin: 25px;
     border-radius: 10px;
 }
+
+.menu{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    width:100%;
+    margin-top:30px;
+    height:auto;
+    min-height: 200px;
+    border:1px solid #b5b4c5;
+    border-radius: 15px;
+}
+
+.menu-text{
+    display:flex;
+    width:90%;
+    flex-direction: column;
+    font-size:15px;
+    margin:25px;
+}
+
+.menu-text p{
+    color:#4b5563;
+    margin-top:10px;
+}
+
+.purchase-list{
+    display:flex;
+    width:90%;
+    justify-content:start;
+    justify-content:space-between;
+    margin-left:20px;
+    font-weight: bold;
+}
+
+.purchase-items{
+    display:flex;
+    width:90%;
+    justify-content:start;
+    justify-content:space-between;
+    margin-left:20px;
+}
+
+.delete-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.update-icon{
+    width: 30px;
+    height: 30px;
+}
+
+hr{
+    width: 95%;
+    margin-left:25px;
+    height:1px
+}
+
