@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>My Tracker</title>
+</head>
+<body>
+    <div class = 'container'>
+        <nav>
+            <h1>Purchase Tracker</h1>
+            <p>Keep track of your spending</p>
+            <ul>
+                <li>Mode</li>
+                <li>View All</li>
+            </ul>
+        </nav>
+        <div class="total">
+            <p>Total Spend</p>
+            <span></span>
+        </div>
+        <form action="submit">
+            <h2>Add New Purchase</h2>
+            <p>Enter Purchase details below</p>
+            <label for="purchase">Purchase Name</label>
+            <input id="purchase" type="text" placeholder="e.g., Groceries, Coffe, Gasand " >
+            <label for="amount">Amount</label>
+            <input id="amount" type="text" placeholder="0.00">
+            <label for="date">Date</label>
+            <input id="date" type="date">
+            <button type="submit">Add Purchase</button>
+        </form>
+    </div>
+</body>
+</html>
