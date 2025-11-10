@@ -64,5 +64,28 @@ def add_purchase():
 def all_purchases():
     return jsonify({"purchases": get_purchases()}), 200
 
+@app.route("/update_purchase", methods=["PUT"])
+def update_purchase():
+    data = request.get_json()
+    purchases = get_purchases()
+    for p in purchases:
+        if p["name"] == data["oldName"]:
+            p["name"] = data["name"]
+            p["amount"] = data["amount"]
+            p["date"] = data["date"]
+            break
+    save_purchases(purchases)
+    return jsonify({"status": "success"}), 200
+
+@app.route("/delete_purchase", methods=["DELETE"])
+def delete_purchase():
+    data = request.get_json()
+    purchases = get_purchases()
+    purchases = [p for p in purchases if p["name"] != data["name"]]
+    save_purchases(purchases)
+    return jsonify({"status": "success"}), 200
+
+
 if __name__ == "__main__":
     app.run(port=5000,debug=True)
+

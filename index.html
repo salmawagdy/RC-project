@@ -29,19 +29,24 @@
                 <img src="imgs/shopping-bag.png" class="purchase-icon" alt="purchases">
             </div>
         </div>
-        <form class="form" onsubmit="return false;">
-            <div class="form-text">
-                <h2>Add New Purchase</h2>
-                <p>Enter Purchase details below</p>
-            </div>
-            <label for="purchase">Purchase Name</label>
-            <input id="purchase" type="text" placeholder="e.g., Groceries, Coffe, Gas " >
-            <label for="amount">Amount</label>
-            <input id="amount" type="text" placeholder="0.00">
-            <label for="date">Date</label>
-            <input id="date" type="date">
-            <button type="submit">Add Purchase</button>
-        </form>
+<form class="form">
+    <div class="form-text">
+        <h2>Add New Purchase</h2>
+        <p>Enter Purchase details below</p>
+    </div>
+
+    <label for="purchase">Purchase Name</label>
+    <input id="purchase" name="purchase" type="text" placeholder="e.g., Groceries, Coffee, Gas">
+
+    <label for="amount">Amount</label>
+    <input id="amount" name="amount" type="text" placeholder="0.00">
+
+    <label for="date">Date</label>
+    <input id="date" name="date" type="date">
+
+    <button type="submit">Add Purchase</button>
+</form>
+
     </div>
     <script src="script.js"></script>
 </body>

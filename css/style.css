@@ -186,6 +186,7 @@ input{
     color: var(--input-text);
 }
 
+
 button{
     background-color: var(--button-bg);
     color: var(--button-text);
@@ -244,6 +245,7 @@ button{
 }
 .purchase-items li{
     background:none !important;
+    width: 80px !important;
 }
 .purchase-list li {
     background:none !important;
@@ -254,7 +256,7 @@ button{
     height: 30px;
 }
 
-.update-icon{
+.update-icon,.save-icon{
     width: 30px;
     height: 30px;
     background-color: white;
@@ -265,6 +267,11 @@ hr{
     width: 95%;
     margin-left:25px;
     height:1px;
+}
+.edit-date,.edit-name,.edit-amount{
+    width: 150px;
+    background-color: var(--input-bg);
+    color: var(--input-text);
 }
 
 body.dark-mode {
