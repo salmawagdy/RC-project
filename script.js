@@ -37,29 +37,54 @@ submit.addEventListener('click', function(e) {
     e.preventDefault();
 
     let nameValue = purchaseName.value.trim();
-    let amountValue = parseFloat(amount.value.trim());
-    let dateValue = date.value;
+    let amountValue = amount.value.trim();
+    let dateValue = date.value.trim();
 
-    if (nameValue === "") {
-        alert("Please enter a purchase name.");
+    if (nameValue === "" || amountValue === "" || dateValue === "") {
+        Swal.fire({
+            icon: "warning",
+            title: "Missing information",
+            text: "Please fill in all fields before saving!"
+        });
         return;
     }
 
-    if (isNaN(amountValue) || amountValue <= 0) {
-        alert("Please enter a vaild amout.");
+    if (/^\d+$/.test(nameValue)) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid purchase name",
+            text: "Purchase must be a string"
+        });
         return;
     }
 
-    if (dateValue === "") {
-        alert("Please select a date.");
+    if (isNaN(parseFloat(amountValue))|| parseFloat(amountValue) <= 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid amount",
+            text: "Amount must be a positive number!"
+        });
         return;
     }
 
-    let today = new Date().toISOString().split("T")[0];
-    if (dateValue > today) {
-        alert("Date cannot be in the future.");
+    let todayDate = new Date().toISOString().split('T')[0];
+    if (dateValue > todayDate) {
+        Swal.fire({
+            icon: "error",
+            title: "Invalid date",
+            text: "Date cannot be in the future"
+        });
         return;
     }
 
-    console.log("Saved successfully!");
+    Swal.fire({
+        icon: "success",
+        title: "Purchase added successfully!",
+        showConfirmButton: false,
+        timer: 1500
+    });
+
+    purchaseName.value = '';
+    amount.value = '';
+    date.value = '';
 });

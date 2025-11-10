@@ -193,6 +193,7 @@ button{
     height:40px;
     margin: 25px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .menu{
