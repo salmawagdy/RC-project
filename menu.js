@@ -1,6 +1,3 @@
-
-
-
 let container = document.querySelector(".purchases-container");
 let purchaseCounter = document.querySelector(".menu-text p span");
 let total = document.querySelector(".total-text span");
@@ -80,7 +77,7 @@ function fetchPurchases() {
                 const deleteBtn = ul.querySelector(".delete-icon");
 
                 updateBtn.addEventListener("click", (e) => {
-                    e.preventDefault()
+                    e.preventDefault();
                     const dateLi = ul.querySelector(".date-text");
                     const nameLi = ul.querySelector(".name-text");
                     const amountLi = ul.querySelector(".amount-text");
@@ -118,21 +115,58 @@ function fetchPurchases() {
                         .then(() => {
                             updateLocalTotal();
                             fetchPurchases();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Purchase updated successfully!",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        })
+                        .catch(() => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Failed to update purchase",
+                                confirmButtonColor: "#4f46e5"
+                            });
                         });
                     });
                 });
 
                 deleteBtn.addEventListener("click", (e) => {
-                    e.preventDefault()
-                    fetch("http://127.0.0.1:5000/delete_purchase", {
-                        method: "DELETE",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ name: p.name })
-                    })
-                    .then(res => res.json())
-                    .then(() => {
-                        updateLocalTotal();
-                        fetchPurchases();
+                    e.preventDefault();
+                    Swal.fire({
+                        title: `Delete purchase "${p.name}"?`,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("http://127.0.0.1:5000/delete_purchase", {
+                                method: "DELETE",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ name: p.name })
+                            })
+                            .then(res => res.json())
+                            .then(() => {
+                                updateLocalTotal();
+                                fetchPurchases();
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Purchase deleted!",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Failed to delete purchase",
+                                    confirmButtonColor: "#4f46e5"
+                                });
+                            });
+                        }
                     });
                 });
             });

@@ -1,6 +1,4 @@
-
-
-let form = document.querySelector(".form");
+let form = document.querySelector("#myform");
 let purchaseName = document.querySelector("#purchase");
 let amount = document.querySelector("#amount");
 let date = document.querySelector("#date");
@@ -103,8 +101,6 @@ form.addEventListener("submit", function(e) {
                 icon: "success",
                 title: "Purchase added successfully!",
                 showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
             });
 
             purchaseName.value = '';

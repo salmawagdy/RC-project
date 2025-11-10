@@ -1,17 +1,1 @@
-[
-    {
-        "name": "coffe",
-        "amount": 10,
-        "date": "2025-11-03"
-    },
-    {
-        "name": "coffe",
-        "amount": 30.0,
-        "date": "2025-11-04"
-    },
-    {
-        "name": "cofffe",
-        "amount": 20.0,
-        "date": "2025-11-06"
-    }
-]
+[]
