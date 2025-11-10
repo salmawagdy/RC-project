@@ -1,3 +1,19 @@
+:root {
+    --bg-color: #eff6ff;
+    --form-bg: white;
+    --menu-bg: white;
+    --total-bg: #4f46e5;
+    --text-color: #1f2937;
+    --secondary-text-color: #4b5563;
+    --heading-color: #312e81;
+    --total-text-color: white;
+    --border-color: #b5b4c5;
+    --button-bg: black;
+    --button-text: white;
+    --input-bg: rgba(128, 128, 128, 0.116);
+    --input-text: #1f2937;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +25,8 @@ body {
     min-height: 100vh; 
     justify-content: center;
     align-items: center;
-    background-color: #eff6ff;   
+    background-color: var(--bg-color);   
+    color: var(--text-color);
 }
 
 .container{
@@ -32,14 +49,14 @@ nav{
 }
 
 nav h1{
-    color:#312e81;
+    color: var(--heading-color);
     font-size:30px;
     font-weight: bold;
     margin:25px;
 }
 
 nav p{
-    color:#4b5563;
+    color: var(--secondary-text-color);
     margin-left:25px;
     margin-top:-20px;
 }
@@ -52,7 +69,6 @@ ul{
 }
 
 ul li{
-    background-color:white;
     list-style-type: none;
     margin: 20px;
     height: 40px;
@@ -60,6 +76,7 @@ ul li{
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    cursor:pointer;
 }
 
 .mode-icon{
@@ -67,8 +84,9 @@ ul li{
     height:20px;
 }
 
-li:first-child{
+ul li:first-child{
     width: 50px;
+    background-color:white;
 }
 
 .list-icon{
@@ -81,16 +99,18 @@ a{
     color:black;
 }
 
-li:nth-child(2){
+ul li:nth-child(2){
     width:150px;
     gap: 8px;
+    cursor:pointer;
+    background-color:white;
 }
 
 .total{
     width:100%;
-    height:130px;;
-    background-color:#4f46e5;
-    color:white;
+    height:130px;
+    background-color: var(--total-bg);
+    color: var(--total-text-color);
     border-radius: 15px;
     display:flex;
     margin-top:30px ;
@@ -122,11 +142,11 @@ li:nth-child(2){
     display:flex;
     flex-direction: column;
     gap: 10px;
-    background-color: white;
+    background-color: var(--form-bg);
     width:100%;
     margin-top:30px;
     height: fit-content;
-    border:1px solid #b5b4c5;
+    border:1px solid var(--border-color);
     border-radius: 15px;
 }
 
@@ -158,16 +178,17 @@ input{
     width:95%;
     height:40px;
     margin-left: 25px;
-    background-color: rgba(128, 128, 128, 0.116);
+    background-color: var(--input-bg);
     border-style:none;
     border-radius: 10px;
     padding-left: 15px;
     padding-right: 15px;
+    color: var(--input-text);
 }
 
 button{
-    background-color:black;
-    color:white;
+    background-color: var(--button-bg);
+    color: var(--button-text);
     width:95%;
     height:40px;
     margin: 25px;
@@ -178,12 +199,12 @@ button{
     display:flex;
     flex-direction: column;
     gap: 10px;
-    background-color: white;
+    background-color: var(--menu-bg);
     width:100%;
     margin-top:30px;
     height:auto;
     min-height: 200px;
-    border:1px solid #b5b4c5;
+    border:1px solid var(--border-color);
     border-radius: 15px;
 }
 
@@ -207,6 +228,8 @@ button{
     justify-content:space-between;
     margin-left:20px;
     font-weight: bold;
+    color:var(--text-color);
+    background:none !important;
 }
 
 .purchase-items{
@@ -215,6 +238,14 @@ button{
     justify-content:start;
     justify-content:space-between;
     margin-left:20px;
+    color:var(--text-color);
+    background:none !important;
+}
+.purchase-items li{
+    background:none !important;
+}
+.purchase-list li {
+    background:none !important;
 }
 
 .delete-icon{
@@ -225,11 +256,30 @@ button{
 .update-icon{
     width: 30px;
     height: 30px;
+    background-color: white;
 }
+
 
 hr{
     width: 95%;
     margin-left:25px;
-    height:1px
+    height:1px;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --container-bg: #1e1e1e;
+    --form-bg: #1e1e1e;
+    --menu-bg: #1e1e1e;
+    --total-bg: #4f46e5;
+    --text-color: #eee;
+    --secondary-text-color: #ccc;
+    --heading-color: #4f46e5;
+    --total-text-color: white;
+    --border-color: #333;
+    --button-bg: #4f46e5;
+    --button-text: white;
+    --input-bg: rgba(255, 255, 255, 0.1);
+    --input-text: #eee;
 }
 
