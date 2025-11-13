@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class='container'>
+        <nav>
+            <div class='nav-header'>
+                <h1>All purchases</h1>
+                <p>View and manage your purchases</p>
+            </div>
+            <ul>
+                <li><img src="{{ url_for('static', filename='images/moon.png') }}" alt="mode" class='mode-icon'></li>
+                <li>
+                    <img src="{{ url_for('static', filename='images/list.png') }}" alt="arrow" class="list-icon">
+                    <a href="{{ url_for('homePage') }}">Add purchase</a>
+                </li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+            </ul>
+        </nav>
+
+        <div class="total">
+            <div class="total-text">
+                <p>Total Spend</p>
+                <span>$0.00</span>
+            </div>
+            <div class="total-img">
+                <img src="{{ url_for('static', filename='images/shopping-bag.png') }}" class="purchase-icon" alt="purchases">
+            </div>
+        </div>
+
+        <div class="menu">
+            <div class="menu-text">
+                <h2>purchase History</h2>
+                <p><span>0</span> purchases recorded</p>
+            </div>
+
+            {% if purchases %}
+            <div class='purchases'>
+                <ul class="purchase-list">
+                    <li>Date</li>
+                    <li>Purchase</li>
+                    <li>Amount</li>
+                    <li>Actions</li>
+                </ul>
+                <div class="purchases-container">
+                        {% for purchase in purchases %}
+                        <hr>
+                        <ul class="purchase-items">
+                        <li class="date-text">{{ purchase.date }}</li>
+                        <li class="name-text">{{ purchase.name }}</li>
+                        <li class="amount-text">${{ "%.2f"|format(purchase.amount) }}</li>
+                        <li>
+                            <button type="button" id='update-icon' class="save-btn">update</button>
+                            <img src="{{ url_for('static', filename='images/trash.png') }}" class="delete-icon" alt="delete">
+                        </li>
+                        </ul>
+                        {% endfor %}
+                </div>
+            {% else %}
+            <p class='alternate-text'>No purchases found.</p>
+            {% endif %}
+            </div>
+        </div> 
+    <script type="module" src="{{ url_for('static', filename='js/menu.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

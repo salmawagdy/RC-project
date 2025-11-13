@@ -36,6 +36,8 @@ body {
     max-width: 1200px;
     width:100%;
     padding: 20px;
+    justify-content: center;
+    align-items:center;
 }
 
 nav{
@@ -44,8 +46,14 @@ nav{
     height:100px;
 }
 
+.login-nav{
+    display:flex;
+    width:60%;
+    height:100px;
+}
+
 .nav-header{
-    width:70%;
+    width:50%;
 }
 
 nav h1{
@@ -62,7 +70,7 @@ nav p{
 }
 
 ul{
-    width:30%;
+    width:50%;
     display:flex;
     margin-top:30px;
     justify-content: end;
@@ -77,6 +85,7 @@ ul li{
     align-items: center;
     border-radius: 10px;
     cursor:pointer;
+    background-color:white;
 }
 
 .mode-icon{
@@ -86,7 +95,6 @@ ul li{
 
 ul li:first-child{
     width: 50px;
-    background-color:white;
 }
 
 .list-icon{
@@ -102,8 +110,13 @@ a{
 ul li:nth-child(2){
     width:150px;
     gap: 8px;
-    cursor:pointer;
-    background-color:white;
+}
+
+ul li:nth-child(3){
+    width:60px;
+}
+ul li:nth-child(4){
+    width:70px;
 }
 
 .total{
@@ -138,7 +151,7 @@ ul li:nth-child(2){
     margin: 30px;
 }
 
-.myform{
+.purchase-form{
     display:flex;
     flex-direction: column;
     gap: 10px;
@@ -149,6 +162,19 @@ ul li:nth-child(2){
     border:1px solid var(--border-color);
     border-radius: 15px;
 }
+.login-form{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--form-bg);
+    width:60%;
+    margin-top:30px;
+    height: fit-content;
+    border:1px solid var(--border-color);
+    border-radius: 15px;
+    align-content: center;
+}
+
 
 .form-text{
     display:flex;
@@ -156,6 +182,43 @@ ul li:nth-child(2){
     flex-direction: column;
     font-size:15px;
     margin:25px;
+}
+
+.form-text p{
+    color:#4b5563;
+    margin-top:10px;
+    margin-bottom:25px;
+}
+
+.login-text{
+    display:flex;
+    width:90%;
+    flex-direction: column;
+    align-items: center;
+    font-size:15px;
+    margin:25px;
+}
+
+.login-text p{
+    color:#4b5563;
+    margin-top:10px;
+    margin-bottom:25px;
+}
+
+.login-navigation{
+    color: var(--input-text);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-navigation a{
+    color:#4f46e5;
+    text-decoration: underline;
+}
+
+h3{
+    color:#4f46e5;
+    margin-top: 10px;
 }
 
 h2{
@@ -178,6 +241,7 @@ input{
     width:95%;
     height:40px;
     margin-left: 25px;
+    margin-right: 10px;
     background-color: var(--input-bg);
     border-style:none;
     border-radius: 10px;
@@ -187,14 +251,19 @@ input{
 }
 
 
-button{
+.submit-button{
     background-color: var(--button-bg);
     color: var(--button-text);
     width:95%;
     height:40px;
-    margin: 25px;
+    margin-left: 25px;
+    margin-top: 25px;
+    margin-bottom:15px;
     border-radius: 10px;
     cursor: pointer;
+    text-align: center;
+    padding-top: 7px;
+    font-size: 20px;
 }
 
 .menu{
@@ -234,6 +303,13 @@ button{
     background:none !important;
 }
 
+/* .purchases-container{
+    display:flex;
+    flex-direction: column;
+    gap: 10px;            
+    margin-top: 20px;
+} */
+
 .purchase-items{
     display:flex;
     width:90%;
@@ -251,6 +327,9 @@ button{
     background:none !important;
 }
 
+.alternate-text{
+    margin-left:25px;
+}
 .delete-icon{
     width: 30px;
     height: 30px;
@@ -272,6 +351,15 @@ hr{
     width: 150px;
     background-color: var(--input-bg);
     color: var(--input-text);
+}
+
+.save-btn{
+    background-color:var(--button-bg);
+    color: var(--button-text);
+    width: 50px;
+    height: 25px;
+    border-radius: 8px;
+    cursor:pointer;
 }
 
 body.dark-mode {

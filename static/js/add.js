@@ -1,13 +1,17 @@
-let form = document.querySelector("#myform");
+import { initializeApp} from "./script.js";
+window.addEventListener('DOMContentLoaded', initializeApp);
+
+
+
+let form = document.querySelector("#purchase-form");
 let purchaseName = document.querySelector("#purchase");
 let amount = document.querySelector("#amount");
 let date = document.querySelector("#date");
 let total = document.querySelector(".total-text span");
 
-const darkBtn = document.querySelectorAll('ul li')[0];
 
-function validatePurchase(nameValue, amountValue, dateValue) {
-    if (!nameValue || !amountValue || !dateValue) {
+export function validatePurchase(nameValue, amountValue, dateValue) {
+    if (nameValue==="" || amountValue==="" || dateValue==="") {
         Swal.fire({
             icon: "warning",
             title: "Missing information",
@@ -47,33 +51,15 @@ function validatePurchase(nameValue, amountValue, dateValue) {
     return true;
 }
 
-function enableDarkMode() {
-    document.body.classList.add('dark-mode');
-    localStorage.setItem('theme', 'dark');
+export function setTotal(amountValue) {
+    let currentTotal = parseFloat(localStorage.getItem("totalSpend")) || 0;
+    currentTotal += parseFloat(amountValue);
+    total.textContent = `$${currentTotal.toFixed(2)}`;
+    localStorage.setItem("totalSpend", currentTotal.toFixed(2));
 }
 
-function disableDarkMode() {
-    document.body.classList.remove('dark-mode');
-    localStorage.setItem('theme', 'light');
-}
 
-darkBtn.addEventListener('click', function() {
-    if (document.body.classList.contains('dark-mode')) {
-        disableDarkMode();
-    } else {
-        enableDarkMode();
-    }
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') enableDarkMode();
-    else disableDarkMode();
-
-    const savedTotal = localStorage.getItem("totalSpend");
-    if (savedTotal) total.textContent = `$${savedTotal}`;
-});
-
+if(form){
 form.addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -101,16 +87,14 @@ form.addEventListener("submit", function(e) {
                 icon: "success",
                 title: "Purchase added successfully!",
                 showConfirmButton: false,
+                timer: 1500
             });
-
             purchaseName.value = '';
             amount.value = '';
             date.value = '';
 
-            let currentTotal = parseFloat(localStorage.getItem("totalSpend")) || 0;
-            currentTotal += parseFloat(amountValue);
-            total.textContent = `$${currentTotal.toFixed(2)}`;
-            localStorage.setItem("totalSpend", currentTotal.toFixed(2));
+        setTotal(amountValue);
+
         } else if (data.status === "warning") {
             Swal.fire({ icon: "warning", title: data.message, confirmButtonColor: "#4f46e5" });
         } else {
@@ -122,3 +106,6 @@ form.addEventListener("submit", function(e) {
         Swal.fire({ icon: "error", title: "Something went wrong!", confirmButtonColor: "#4f46e5" });
     });
 });
+
+}
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>My Tracker</title>
 </head>
@@ -16,8 +16,10 @@
                 <p>Keep track of your spending</p>
             </div>
             <ul>
-                <li><img src="imgs/moon.png" alt="mode"class='mode-icon'></li>
-                <li><img src="imgs/list.png" alt="list"class='list-icon'><a href="menu.html">View All</a></li>
+                <li><img src="{{ url_for('static', filename='images/moon.png') }}" alt="mode"class='mode-icon'></li>
+                <li><img src="{{ url_for('static', filename='images/list.png') }}" alt="list"class='list-icon'><a href="{{ url_for('menu') }}">View All</a></li>
+                <li> <a href="{{ url_for('login') }}">Login</a></li>
+                <li> <a href="{{ url_for('signup') }}">Sign up</a></li>
             </ul>
         </nav>
         <div class="total">
@@ -26,10 +28,10 @@
                 <span>$0.00</span>
             </div>
             <div class="total-img">
-                <img src="imgs/shopping-bag.png" class="purchase-icon" alt="purchases">
+                <img src="{{ url_for('static', filename='images/shopping-bag.png') }}" class="purchase-icon" alt="purchases">
             </div>
         </div>
-<form id="myform" class="myform">
+<form id="purchase-form" class="purchase-form">
     <div class="form-text">
         <h2>Add New Purchase</h2>
         <p>Enter Purchase details below</p>
@@ -38,16 +40,17 @@
     <label for="purchase">Purchase Name</label>
     <input id="purchase" name="name" type="text" placeholder="e.g., Groceries, Coffee, Gas">
 
-    <label for="amount">Amount</label>
+    <label for="amount">Amount ($)</label>
     <input id="amount" name="amount" type="text" placeholder="0.00">
 
     <label for="date">Date</label>
     <input id="date" name="date" type="date">
 
-    <button type="submit">Add Purchase</button>
+    <button type="submit" class="submit-button">Add Purchase</button>
 </form>
 
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="{{ url_for('static', filename='js/add.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

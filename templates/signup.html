@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class = 'container'>
+        <nav class="login-nav">
+            <div class ='nav-header'>
+            </div>
+            <ul>
+                <li><img src="{{ url_for('static', filename='images/moon.png') }}" alt="mode"class='mode-icon'></li>
+            </ul>
+        </nav>
+
+
+        <form class="login-form" id="signup-form">
+            <div class="login-text">
+        <img src="{{ url_for('static', filename='images/shopping-bag.png') }}" class="purchase-icon" alt="icon">
+        <h3>Welcome back</h3>
+        <p>Sign in to your account to continue</p>
+    </div>
+
+    <label for="name">Username</label>
+    <input id="name" name="name" type="text" placeholder="John Doe">
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="text" placeholder="you@example.com">
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" >
+
+    <label for="confirm-password">Confirm Password</label>
+    <input id="confirm-password" name="confirmPassword" type="password" >
+
+    <button type="submit" class="submit-button">Sign Up</button>
+
+    <p class="login-navigation">Already have an account! <a href="{{ url_for('login') }}">Login</a></p>
+</form>
+
+    </div>
+<script type="module" src="{{ url_for('static', filename='js/user.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
