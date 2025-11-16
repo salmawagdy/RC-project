@@ -1,12 +1,22 @@
 [
     {
-        "name": "salma",
-        "amount": 20.0,
-        "date": "2025-11-09"
+        "name": "geee",
+        "amount": 45,
+        "date": "2025-11-04"
     },
     {
-        "name": "hello",
-        "amount": 20.0,
-        "date": "2025-11-03"
+        "name": "Salma Wagdy",
+        "amount": 45.0,
+        "date": "2025-11-04"
+    },
+    {
+        "name": "Salma Wagdy",
+        "amount": 45.0,
+        "date": "2025-11-04"
+    },
+    {
+        "name": "Salma Wagdy",
+        "amount": 1000.0,
+        "date": "2025-11-04"
     }
 ]

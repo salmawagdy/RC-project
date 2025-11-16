@@ -12,6 +12,7 @@
     --button-text: white;
     --input-bg: rgba(128, 128, 128, 0.116);
     --input-text: #1f2937;
+    --budget-bg:#d9d8f3;
 }
 
 * {
@@ -119,20 +120,78 @@ ul li:nth-child(4){
     width:70px;
 }
 
-.total{
+.cards{
     width:100%;
+    height:130px;
+    display:flex;
+    margin-top:30px ;
+    justify-content: space-evenly;
+}
+.total{
+    width:40%;
     height:130px;
     background-color: var(--total-bg);
     color: var(--total-text-color);
     border-radius: 15px;
     display:flex;
-    margin-top:30px ;
+}
+.budget{
+    display:flex;
+    flex-direction: column;
+    margin-left:auto;
+    width:40%;
+    height:130px;
+    background-color:var(--form-bg);
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    border: 2px dashed var(--total-bg);
+}
+
+.updated{
+    display:flex;
+    flex-direction: column;
+    margin-left:auto;
+    width:40%;
+    height:130px;
+    background-color:greenyellow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    border: 2px dashed var(--total-bg);
 }
 
 .total-text{
     width:70%;
     margin:30px;
 }
+.budget-text{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.budget-text:hover{
+    background-color:var(--budget-bg);
+    width:80%;
+    height: 80%;
+    border-radius: 15px;
+    cursor:pointer;
+}
+
+.budget-text p{
+    color:var(--total-bg);
+    font-size:40px;
+    font: bold;
+}
+
+.budget-text span{
+    color:var(--secondary-text-color);
+    font-size:20px;
+}
+
+
 
 .total-text span{
     font-size: 30px;
@@ -263,7 +322,7 @@ input{
     cursor: pointer;
     text-align: center;
     padding-top: 7px;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .menu{
@@ -302,13 +361,6 @@ input{
     color:var(--text-color);
     background:none !important;
 }
-
-/* .purchases-container{
-    display:flex;
-    flex-direction: column;
-    gap: 10px;            
-    margin-top: 20px;
-} */
 
 .purchase-items{
     display:flex;
@@ -362,6 +414,119 @@ hr{
     cursor:pointer;
 }
 
+.set-budget{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.budget-form{
+    position: relative;
+    background-color: var(--form-bg);
+    padding: 30px;
+    border-radius: 10px;
+    width: 600px;
+    height:fit-content;
+}
+
+.budget-button{
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    width:40%;
+    height:40px;
+    margin-left: 40px;
+    margin-top: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 7px;
+    font-size: 20px;
+}
+
+h4{
+    text-align: center;
+    font-size:25px;
+    margin-bottom: 50px;
+}
+
+.close-btn{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    background:none;
+    border: none;
+    color:var(--input-text);
+    cursor: pointer;
+}
+
+.budget-card {
+    width:40%;
+    height:130px;
+    background:	#16a34a;
+    padding: 20px;
+    border-radius: 12px;
+    margin-left:auto;
+}
+
+.budget-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:#ddd
+}
+
+
+.budget-remaining {
+    margin-bottom: 5px;
+    color:#ddd
+}
+
+.budget-progress {
+    color:#ddd
+
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background:#15803c;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+    background:var(--text-color);
+    border-radius: 5px;
+    transition: width 0.3s;
+}
+
+h5{
+    color:#ddd
+}
+
+#edit-budget{
+    width: 60px;
+    height: 30px;
+    border-radius: 7px;
+    border:none;
+    cursor:pointer;
+    color:var(--text-color);
+    background: var(--bg-color);
+
+}
+
 body.dark-mode {
     --bg-color: #121212;
     --container-bg: #1e1e1e;
@@ -377,5 +542,6 @@ body.dark-mode {
     --button-text: white;
     --input-bg: rgba(255, 255, 255, 0.1);
     --input-text: #eee;
+    --budget-bg:#908d8df0;
 }
 

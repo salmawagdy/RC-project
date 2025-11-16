@@ -1,28 +1,21 @@
 import { validatePurchase } from "./add.js";
-import { initializeApp} from "./script.js";
+import { initializeApp } from "./script.js";
+import { updateBudget} from "./budget.js"; 
+
 window.addEventListener('DOMContentLoaded', initializeApp);
 
 
-let total = document.querySelector(".total-text span");
 const updateBtn = document.querySelectorAll("#update-icon");
 const deleteBtn = document.querySelectorAll(".delete-icon");
-const line = document.querySelectorAll('hr')
 
 const countText = document.querySelector(".menu-text p span");
 
 
-function updateLocalTotal(purchases) {
-    const totalAmount = purchases.reduce((sum, p) => sum + parseFloat(p.amount), 0);
-    localStorage.setItem("totalSpend", totalAmount.toFixed(2));
-    if (total) {
-        total.textContent = `$${totalAmount.toFixed(2)}`;
-    }
-    return totalAmount;
-}
+
 
 updateBtn.forEach((updateBtn) => {
     updateBtn.addEventListener("click", (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const ul = updateBtn.closest("ul");
         const dateLi = ul.querySelector(".date-text");
@@ -71,9 +64,7 @@ updateBtn.forEach((updateBtn) => {
                     amountLi.textContent = `$${newAmount.toFixed(2)}`;
                     saveBtn.remove();
                     updateBtn.style.display = "inline";
-                    
-                    localStorage.setItem("purchases", JSON.stringify(data.purchases));
-                    updateLocalTotal(data.purchases);  
+                    updateBudget(data.purchases)
                     
                     Swal.fire({
                         icon: "success",
@@ -101,6 +92,7 @@ updateBtn.forEach((updateBtn) => {
     });
 });
 
+// ---------------- Delete Purchase ----------------
 deleteBtn.forEach((deleteBtn) => {
     deleteBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -135,10 +127,10 @@ deleteBtn.forEach((deleteBtn) => {
                     if (data.status === "success") {
                         const prevHr = ul.previousElementSibling;
                         ul.remove();
-                        if (prevHr && prevHr.tagName === "HR") {
-                        prevHr.remove();
-        }
-                        updateLocalTotal(data.purchases);
+                        if (prevHr && prevHr.tagName === "HR") prevHr.remove();
+
+                        updateBudget(data.purchases)
+
                         if (countText) countText.textContent = data.purchases.length;
 
                         Swal.fire({

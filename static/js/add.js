@@ -1,5 +1,6 @@
-import { initializeApp} from "./script.js";
-window.addEventListener('DOMContentLoaded', initializeApp);
+// import { initializeApp} from "./script.js";
+import { addPurchase } from "./budget.js";
+// window.addEventListener('DOMContentLoaded', initializeApp);
 
 
 
@@ -7,7 +8,6 @@ let form = document.querySelector("#purchase-form");
 let purchaseName = document.querySelector("#purchase");
 let amount = document.querySelector("#amount");
 let date = document.querySelector("#date");
-let total = document.querySelector(".total-text span");
 
 
 export function validatePurchase(nameValue, amountValue, dateValue) {
@@ -51,13 +51,6 @@ export function validatePurchase(nameValue, amountValue, dateValue) {
     return true;
 }
 
-export function setTotal(amountValue) {
-    let currentTotal = parseFloat(localStorage.getItem("totalSpend")) || 0;
-    currentTotal += parseFloat(amountValue);
-    total.textContent = `$${currentTotal.toFixed(2)}`;
-    localStorage.setItem("totalSpend", currentTotal.toFixed(2));
-}
-
 
 if(form){
 form.addEventListener("submit", function(e) {
@@ -89,11 +82,12 @@ form.addEventListener("submit", function(e) {
                 showConfirmButton: false,
                 timer: 1500
             });
+
+            addPurchase(amountValue);
             purchaseName.value = '';
             amount.value = '';
             date.value = '';
 
-        setTotal(amountValue);
 
         } else if (data.status === "warning") {
             Swal.fire({ icon: "warning", title: data.message, confirmButtonColor: "#4f46e5" });
@@ -108,4 +102,3 @@ form.addEventListener("submit", function(e) {
 });
 
 }
-

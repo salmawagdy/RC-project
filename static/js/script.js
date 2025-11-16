@@ -1,4 +1,3 @@
-
 let total = document.querySelector(".total-text span");
 const darkBtn = document.querySelectorAll('ul li')[0];
 
@@ -20,13 +19,12 @@ darkBtn.addEventListener('click', function() {
     }
 });
 
+
+
 export function initializeApp() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') enableDarkMode();
     else disableDarkMode();
-
-    const savedTotal = localStorage.getItem("totalSpend");
-    if (total && savedTotal) total.textContent = `$${savedTotal}`;
 
 }
 
