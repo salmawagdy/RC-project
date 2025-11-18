@@ -10,36 +10,6 @@ const totalTextSpan = document.querySelector(".total-text span");
 
 let budgetCardDiv;
 
-export async function isUserLoggedIn() {
-    try {
-        const response = await fetch("http://127.0.0.1:5000/check_auth", {
-            method: "GET",
-            credentials: "include"
-        });
-        const data = await response.json();
-        if (!data.response=="warning") {
-            Swal.fire({
-                icon: "warning",
-                title: data.message,
-                confirmButtonColor: "#4f46e5"
-            }).then(() => {
-                window.location.href = data.redirect;
-            });
-            return false;
-        }
-        return true;
-    } catch (err) {
-        console.error("Error checking login:", err);
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Could not verify login status",
-            confirmButtonColor: "#4f46e5"
-        });
-        return false;
-    }
-}
-
 
 // ------------------ Get current user ------------------
 
@@ -224,10 +194,12 @@ export function checkOverBudget() {
     setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 }
 
+
 // ------------------ Save Budget ------------------
 if (saveBtn) {
-    saveBtn.addEventListener("click", async () => {
-        // Check if user is logged in
+    saveBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        
         if (!userEmail) {
             Swal.fire({
                 icon: "warning",
@@ -237,21 +209,33 @@ if (saveBtn) {
             });
             return;
         }
-
+        
         if (!budgetInput) return;
+        
         const value = parseFloat(budgetInput.value);
-        if (isNaN(value) || value <= 0) return;
-
+        
+        
+        if (value <= 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Amount",
+                text: "Budget amount must be greater than zero",
+                confirmButtonColor: "#4f46e5"
+            });
+            return;
+        }
+        
+        
         totalBudget = value;
         remainingBudget = value - totalSpent;
         if (remainingBudget < 0) remainingBudget = 0;
-
         isOverBudget = totalSpent > totalBudget;
-
         setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
-
         createBudgetCard();
         closeBudgetForm();
+        
+        
+        location.reload();
     });
 }
 
