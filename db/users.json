@@ -27,28 +27,28 @@
         "password": "Salma@123",
         "purchases": [
             {
+                "name": "Coffee",
+                "amount": 200.0,
+                "date": "2025-11-18"
+            },
+            {
+                "name": "Coffee",
+                "amount": 200.0,
+                "date": "2025-11-18"
+            },
+            {
+                "name": "mkn",
+                "amount": 454.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "ssss",
+                "amount": 100,
+                "date": "2025-11-04"
+            },
+            {
                 "name": "ssss",
                 "amount": 100.0,
-                "date": "2025-11-04"
-            },
-            {
-                "name": "Coffee",
-                "amount": 200.0,
-                "date": "2025-11-18"
-            },
-            {
-                "name": "Coffee",
-                "amount": 200.0,
-                "date": "2025-11-18"
-            },
-            {
-                "name": "mkn",
-                "amount": 454.0,
-                "date": "2025-11-04"
-            },
-            {
-                "name": "mkn",
-                "amount": 454.0,
                 "date": "2025-11-04"
             }
         ]
@@ -92,6 +92,59 @@
                 "name": "food",
                 "amount": 200.0,
                 "date": "2025-11-17"
+            }
+        ]
+    },
+    {
+        "name": "Abdullah",
+        "email": "abdullah@wemaad.net",
+        "password": "Te$t123123",
+        "purchases": []
+    },
+    {
+        "name": "Abdullah",
+        "email": "sara@gmail.com",
+        "password": "Salma@123",
+        "purchases": [
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-06"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-05"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-05"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-05"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-05"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-05"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-11"
+            },
+            {
+                "name": "ssss",
+                "amount": 454.0,
+                "date": "2025-11-06"
             }
         ]
     }

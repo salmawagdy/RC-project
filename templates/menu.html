@@ -19,6 +19,12 @@
                 <li>
                     <img src="{{ url_for('static', filename='images/list.png') }}" alt="arrow" class="list-icon">
                     <a href="{{ url_for('homePage') }}">Add purchase</a>
+                    {% if session.get('user_email') %}
+        <li><img id="logout-btn" src="{{ url_for('static', filename='images/logout.png') }}" alt="logout" class="logout-icon"></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+    {% endif %}
                 </li>
             </ul>
         </nav>
@@ -91,6 +97,10 @@
     <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/budget.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/user.js') }}"></script>
+    <script> 
+    const moonUrl = "{{ url_for('static', filename='images/moon.png') }}";
+    const sunUrl  = "{{ url_for('static', filename='images/sun.png') }}";
+</script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
-// import { initializeApp} from "./script.js";
+
 import { addPurchase } from "./budget.js";
-// window.addEventListener('DOMContentLoaded', initializeApp);
+
 
 
 
@@ -8,6 +8,10 @@ let form = document.querySelector("#purchase-form");
 let purchaseName = document.querySelector("#purchase");
 let amount = document.querySelector("#amount");
 let date = document.querySelector("#date");
+let countText = document.querySelector(".menu-text p span");
+
+
+
 
 export function validatePurchase(nameValue, amountValue, dateValue) {
     if (nameValue === "" || amountValue === "" || dateValue === "") {
@@ -77,12 +81,17 @@ if (form) {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
+                if (countText) 
+                    {countText.textContent = data.purchases.length
+                }
+                console.log(countText)
                 Swal.fire({
                     icon: "success",
                     title: "Purchase added successfully!",
                     showConfirmButton: false,
                     timer: 1500
                 });
+                
                 addPurchase(amountValue);
                 purchaseName.value = '';
                 amount.value = '';

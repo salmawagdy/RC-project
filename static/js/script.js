@@ -1,5 +1,6 @@
 const darkBtn = document.querySelectorAll('ul li')[0];
 
+
 function enableDarkMode() {
     document.body.classList.add('dark-mode');
     localStorage.setItem('theme', 'dark');
