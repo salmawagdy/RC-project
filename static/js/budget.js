@@ -217,8 +217,7 @@ if (saveBtn) {
         if (!userEmail) {
             Swal.fire({
                 icon: "warning",
-                title: "No user logged in",
-                text: "Please login before setting a budget",
+                title: "Pease login first",
                 confirmButtonColor: "#4f46e5"
             });
             return;
