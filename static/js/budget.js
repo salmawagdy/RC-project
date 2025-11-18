@@ -130,7 +130,7 @@ export function createBudgetCard() {
     budgetCardDiv.className = "budget-card";
 
     budgetCardDiv.innerHTML = `
-        <h5>Monthly Budget</h5>
+        <h5>My Budget</h5>
         <div class="budget-total">
             <span id="budget-value-card">$${totalBudget.toFixed(2)}</span>
             <button id="edit-budget">Edit</button>
@@ -166,20 +166,34 @@ export function createBudgetCard() {
     checkOverBudget();
 }
 
+
 // ------------------ Check / Over-Budget ------------------
 export function checkOverBudget() {
     if (!budgetCardDiv || totalBudget === null) return;
 
     const overBudgetText = budgetCardDiv.querySelector("#over-budget-text");
-    const usedPercent = totalBudget > 0 ? ((totalBudget - remainingBudget) / totalBudget) * 100 : 0;
-
     const remainingSpan = budgetCardDiv.querySelector("#remaining-budget");
     const progressFill = budgetCardDiv.querySelector("#progress-fill");
     const budgetUsedSpan = budgetCardDiv.querySelector("#budget-used");
 
-    if (remainingSpan) remainingSpan.textContent = `$${remainingBudget.toFixed(2)}`;
-    if (progressFill) progressFill.style.width = `${usedPercent}%`;
-    if (budgetUsedSpan) budgetUsedSpan.textContent = `${usedPercent.toFixed(1)}% used`;
+    const numericPercent = totalBudget > 0 ? (totalSpent / totalBudget) * 100 : 0;
+
+
+    const barPercent = Math.min(numericPercent, 100);
+
+
+    if (remainingSpan) {
+        if (remainingBudget < 0) {
+            remainingSpan.textContent = `-$${Math.abs(remainingBudget).toFixed(2)}`;
+        } else {
+            remainingSpan.textContent = `$${remainingBudget.toFixed(2)}`;
+        }
+    }
+
+    
+    if (progressFill) progressFill.style.width = `${barPercent}%`;
+
+    if (budgetUsedSpan) budgetUsedSpan.textContent = `${numericPercent.toFixed(1)}% used`;
 
     if (totalSpent > totalBudget) {
         isOverBudget = true;
