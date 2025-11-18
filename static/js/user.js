@@ -1,5 +1,7 @@
 import { initializeApp} from "./script.js";
+import { clearCurrentUser } from "./budget.js";
 window.addEventListener('DOMContentLoaded', initializeApp);
+
 
 
 let nameInput = document.querySelector("#name");
@@ -8,6 +10,8 @@ let passwordInput = document.querySelector("#password");
 let confirmPasswordInput = document.querySelector("#confirm-password");
 let signupForm = document.querySelector("#signup-form");
 let loginForm = document.querySelector("#login-form");
+let logout = document.getElementById("logout-btn");
+
 
 
 
@@ -68,6 +72,44 @@ function validateSignup(nameValue, emailValue, passwordValue, confirmPasswordVal
 }
 
 
+if (logout) {
+    logout.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        fetch("http://127.0.0.1:5000/logout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include"
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                clearCurrentUser();
+                Swal.fire({
+                    icon: "success",
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+
+                setTimeout(() => {
+                    window.location.reload();;
+                }, 1000);
+            }
+
+            else if (data.status === "warning") {
+                Swal.fire({
+                    icon: "warning",
+                    title: data.message,
+                    confirmButtonColor: "#4f46e5"
+                });
+            }
+        })
+        .catch(err => console.log("Logout error:", err));
+    });
+}
+
+
 if (loginForm) {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -89,21 +131,42 @@ if (loginForm) {
         fetch("http://127.0.0.1:5000/login_user", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(userData)
         })
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
+                const userEmail = data.user.email;
+
+                localStorage.setItem("userEmail", userEmail);
+
+                let userBudgets = localStorage.getItem("userBudgets")
+                    ? JSON.parse(localStorage.getItem("userBudgets"))
+                    : {};
+
+                if (!userBudgets[userEmail]) {
+                    userBudgets[userEmail] = {
+                        totalBudget: null,
+                        remainingBudget: null,
+                        totalSpent: 0,
+                        isOverBudget: false
+                    };
+                    localStorage.setItem("userBudgets", JSON.stringify(userBudgets));
+                }
+
                 Swal.fire({
                     icon: "success",
                     title: "Login successful!",
                     showConfirmButton: false,
                     timer: 1000
                 }).then(() => {
-                    window.location.href = data.redirect;;
+                    window.location.href = data.redirect;
                 });
+
                 emailInput.value = '';
                 passwordInput.value = '';
+
             } else {
                 Swal.fire({
                     icon: data.status === "warning" ? "warning" : "error",
@@ -118,6 +181,7 @@ if (loginForm) {
         });
     });
 }
+
 
 if (signupForm) {
     signupForm.addEventListener('submit', function(e) {
@@ -150,7 +214,7 @@ if (signupForm) {
                     showConfirmButton: false,
                     timer: 1000
                 }).then(() => {
-                    window.location.href = data.redirect;;
+                    window.location.href = data.redirect;
                 });
 
                 nameInput.value = '';
@@ -171,3 +235,5 @@ if (signupForm) {
         });
     });
 }
+
+

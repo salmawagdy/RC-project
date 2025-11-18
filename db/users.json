@@ -1,32 +1,52 @@
 [
     {
         "name": "salma",
-        "email": "salmawagdy227@gmail.com",
-        "password": "Salma@1234"
-    },
-    {
-        "name": "sara",
         "email": "salma@gmail.com",
-        "password": "Salma@123"
-    },
-    {
-        "name": "sarsora",
-        "email": "sara@gmail.com",
-        "password": "Salma@123"
-    },
-    {
-        "name": "Hello",
-        "email": "Hello@gmail.com",
-        "password": "Salma@123"
-    },
-    {
-        "name": "Hello",
-        "email": "Hellos@gmail.com",
-        "password": "Salma@123"
+        "password": "Salma@123",
+        "purchases": [
+            {
+                "name": "ssss",
+                "amount": 100.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "ssss",
+                "amount": 100.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "ssss",
+                "amount": 100.0,
+                "date": "2025-11-04"
+            }
+        ]
     },
     {
         "name": "salma",
-        "email": "salmaaa@gmail.com",
-        "password": "Salma@123"
+        "email": "salmawagdy227@gmail.com",
+        "password": "Salma@123",
+        "purchases": [
+            {
+                "name": "ssss",
+                "amount": 100.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "ssss",
+                "amount": 100.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "gas",
+                "amount": 50,
+                "date": "2025-11-18"
+            }
+        ]
+    },
+    {
+        "name": "fares",
+        "email": "uou@gmail.com",
+        "password": "Salma@123",
+        "purchases": []
     }
 ]

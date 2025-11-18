@@ -1,7 +1,6 @@
 import { validatePurchase } from "./add.js";
 import { initializeApp } from "./script.js";
 import { updateBudget} from "./budget.js"; 
-
 window.addEventListener('DOMContentLoaded', initializeApp);
 
 
@@ -14,8 +13,9 @@ const countText = document.querySelector(".menu-text p span");
 
 
 updateBtn.forEach((updateBtn) => {
-    updateBtn.addEventListener("click", (e) => {
+    updateBtn.addEventListener("click", async(e) => {
         e.preventDefault();
+
 
         const ul = updateBtn.closest("ul");
         const dateLi = ul.querySelector(".date-text");
@@ -47,6 +47,7 @@ updateBtn.forEach((updateBtn) => {
             fetch("/update_purchase", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({
                     oldName: oldName,
                     oldAmount: oldAmount,
@@ -94,8 +95,9 @@ updateBtn.forEach((updateBtn) => {
 
 // ---------------- Delete Purchase ----------------
 deleteBtn.forEach((deleteBtn) => {
-    deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.addEventListener("click", async(e) => {
         e.preventDefault();
+
         const ul = deleteBtn.closest("ul");
         const dateLi = ul.querySelector(".date-text");
         const nameLi = ul.querySelector(".name-text");
@@ -116,6 +118,7 @@ deleteBtn.forEach((deleteBtn) => {
                 fetch("/delete_purchase", {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
+                    credentials: "include",
                     body: JSON.stringify({ 
                         name: purchaseName,
                         amount: purchaseAmount,

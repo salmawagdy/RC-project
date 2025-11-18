@@ -1,4 +1,3 @@
-let total = document.querySelector(".total-text span");
 const darkBtn = document.querySelectorAll('ul li')[0];
 
 function enableDarkMode() {

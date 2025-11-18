@@ -9,9 +9,8 @@ let purchaseName = document.querySelector("#purchase");
 let amount = document.querySelector("#amount");
 let date = document.querySelector("#date");
 
-
 export function validatePurchase(nameValue, amountValue, dateValue) {
-    if (nameValue==="" || amountValue==="" || dateValue==="") {
+    if (nameValue === "" || amountValue === "" || dateValue === "") {
         Swal.fire({
             icon: "warning",
             title: "Missing information",
@@ -38,7 +37,7 @@ export function validatePurchase(nameValue, amountValue, dateValue) {
         });
         return false;
     }
-    let todayDate = new Date().toISOString().split('T')[0];
+    const todayDate = new Date().toISOString().split('T')[0];
     if (dateValue > todayDate) {
         Swal.fire({
             icon: "error",
@@ -52,53 +51,57 @@ export function validatePurchase(nameValue, amountValue, dateValue) {
 }
 
 
-if(form){
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
+if (form) {
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
 
-    let nameValue = purchaseName.value.trim();
-    let amountValue = amount.value.trim();
-    let dateValue = date.value.trim();
 
-    if (!validatePurchase(nameValue, amountValue, dateValue)) return;
+        const nameValue = purchaseName.value.trim();
+        const amountValue = amount.value.trim();
+        const dateValue = date.value.trim();
 
-    const purchaseData = {
-        name: nameValue,
-        amount: parseFloat(amountValue),
-        date: dateValue
-    };
+        if (!validatePurchase(nameValue, amountValue, dateValue)) return;
 
-    fetch("http://127.0.0.1:5000/add_purchase", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(purchaseData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
+        const purchaseData = {
+            name: nameValue,
+            amount: parseFloat(amountValue),
+            date: dateValue
+        };
+
+        fetch("http://127.0.0.1:5000/add_purchase", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(purchaseData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Purchase added successfully!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                addPurchase(amountValue);
+                purchaseName.value = '';
+                amount.value = '';
+                date.value = '';
+            } else {
+                Swal.fire({
+                    icon: data.status === "warning" ? "warning" : "error",
+                    title: data.message,
+                    confirmButtonColor: "#4f46e5"
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
             Swal.fire({
-                icon: "success",
-                title: "Purchase added successfully!",
-                showConfirmButton: false,
-                timer: 1500
+                icon: "error",
+                title: "Something went wrong!",
+                confirmButtonColor: "#4f46e5"
             });
-
-            addPurchase(amountValue);
-            purchaseName.value = '';
-            amount.value = '';
-            date.value = '';
-
-
-        } else if (data.status === "warning") {
-            Swal.fire({ icon: "warning", title: data.message, confirmButtonColor: "#4f46e5" });
-        } else {
-            Swal.fire({ icon: "error", title: data.message, confirmButtonColor: "#4f46e5" });
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        Swal.fire({ icon: "error", title: "Something went wrong!", confirmButtonColor: "#4f46e5" });
+        });
     });
-});
-
 }

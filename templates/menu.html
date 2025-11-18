@@ -25,7 +25,8 @@
             </ul>
         </nav>
 
-        <div class="total">
+                <div class="cards">
+            <div class="total">
             <div class="total-text">
                 <p>Total Spend</p>
                 <span>$0.00</span>
@@ -33,6 +34,15 @@
             <div class="total-img">
                 <img src="{{ url_for('static', filename='images/shopping-bag.png') }}" class="purchase-icon" alt="purchases">
             </div>
+        </div>
+
+
+        <div class="budget" id="budget-box">
+            <div class="budget-text">
+                <p>$</p>
+                <span id ='buget-value'>Set Budget</span>
+            </div>
+        </div>
         </div>
 
         <div class="menu">
@@ -67,8 +77,20 @@
             <p class='alternate-text'>No purchases found.</p>
             {% endif %}
             </div>
+            <div class="set-budget" >
+        <form class="budget-form">
+            <h4>Set Budget</h4>
+            <label for="budget-input">Budget Amount ($)</label>
+            <input type="number" id="budget-input" placeholder="0.00">
+
+            <button type="submit" class="budget-button" id="budget-btn">Save Budget</button>
+            <button type="action" class="close-btn">x</button>
+        </form>
+    </div>
         </div> 
     <script type="module" src="{{ url_for('static', filename='js/menu.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/budget.js') }}"></script>
+
 </body>
 </html>

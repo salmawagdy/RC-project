@@ -1,15 +1,19 @@
-from flask import Flask, request, jsonify, render_template, url_for, redirect
+from flask import Flask, request, jsonify, render_template, url_for, redirect, session
 from classes.purchase import Purchase
 from classes.user import User
 import os
 import json
 from flask_cors import CORS
 
-app = Flask(__name__)  
-CORS(app)
+app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "xxxxxxxxxxxxxxxxx")
+CORS(app, supports_credentials=True)
+
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['PERMANENT_SESSION_LIFETIME'] = 3600
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-purchase_file = os.path.join(BASE_DIR, 'db', 'file.json')
 user_file = os.path.join(BASE_DIR, 'db', 'users.json')
 
 @app.route("/")
@@ -18,8 +22,14 @@ def homePage():
 
 @app.route("/menu")
 def menu():
-    purchases = get_file(purchase_file)
-    return render_template('menu.html',purchases=purchases)
+    if "user_email" not in session:
+        return redirect(url_for('login'))
+    user_email = session["user_email"]
+    users = get_file(user_file)
+    user = next((u for u in users if u["email"] == user_email), None)
+    purchases = user.get("purchases", []) if user else []
+    
+    return render_template('menu.html', purchases=purchases)
 
 @app.route("/login")
 def login():
@@ -28,6 +38,26 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
+
+@app.route("/check_auth", methods=["GET"])
+def check_auth():
+    if "user_email" not in session:
+        return jsonify({"status": "warning", 'message':"Please login first "}), 401
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    if "user_email" not in session:  
+        return jsonify({
+            "status": "warning",
+            "message": "Already logged out"
+        })
+    session.clear()
+    return jsonify({
+        "status": "success",
+        "message": "Logged out successfully",
+    })
+
 
 
 
@@ -43,13 +73,16 @@ def get_file(file_name):
     except FileNotFoundError:
         return []
 
-def save_to_file(file_name,file_data):
+def save_to_file(file_name, file_data):
     file = open(file_name, "w")
     file.write(json.dumps(file_data, indent=4))
     file.close()
 
 @app.route("/add_purchase", methods=["POST"])
 def add_purchase():
+    if "user_email" not in session:
+        return jsonify({"status": "warning", 'message':"Please login first "})
+    
     data = request.get_json()
     name = data.get('name')
     amount = data.get('amount')
@@ -69,23 +102,48 @@ def add_purchase():
     if not purchase.date_is_valid():
         return jsonify({"status": "error", "message": "Date cannot be in the future"}), 400
 
-    purchases = get_file(purchase_file)
-    purchases.append(purchase.to_dict())
-    save_to_file(purchase_file, purchases)
+    # Add purchase to user's purchases
+    user_email = session["user_email"]
+    users = get_file(user_file)
+    
+    for user in users:
+        if user["email"] == user_email:
+            if "purchases" not in user:
+                user["purchases"] = []
+            user["purchases"].append(purchase.to_dict())
+            break
+    
+    save_to_file(user_file, users)
 
     return jsonify({"status": "success", "message": "Purchase added successfully!"}), 200
 
-
 @app.route("/purchases")
 def get_purchases():
-    purchases = get_file(purchase_file)
-    return jsonify({"status": "success", "purchases": purchases})
-
-
-
+    if "user_email" not in session:
+        return jsonify({"status": "warning", "message": "login first"}), 401
+    
+    user_email = session["user_email"]
+    users = get_file(user_file)
+    user = next((u for u in users if u["email"] == user_email), None)
+    
+    if not user:
+        return jsonify({"status": "error", "message": "User not found"}), 404
+    
+    purchases = user.get("purchases", [])
+    return jsonify({
+        "status": "success",
+        "purchases": purchases,
+        "user": {
+            "name": user["name"],
+            "email": user["email"]
+        }
+    })
 
 @app.route("/update_purchase", methods=["PUT"])
 def update_purchase():
+    if "user_email" not in session:
+        return jsonify({"status": "error", "message": "Please login first"}), 401
+    
     data = request.get_json()
     old_name = data.get('oldName') 
     new_name = data.get('name')
@@ -106,56 +164,67 @@ def update_purchase():
     if not purchase.date_is_valid():
         return jsonify({"status": "error", "message": "Date cannot be in the future"}), 400
 
-    purchases = get_file(purchase_file)
+    user_email = session["user_email"]
+    users = get_file(user_file)
     found = False
 
-    for p in purchases:
-        if p["name"] == old_name:
-            p["name"] = new_name
-            p["amount"] = amount
-            p["date"] = date
-            found = True
+    for user in users:
+        if user["email"] == user_email:
+            purchases = user.get("purchases", [])
+            for p in purchases:
+                if p["name"] == old_name:
+                    p["name"] = new_name
+                    p["amount"] = amount
+                    p["date"] = date
+                    found = True
+                    break
             break
 
     if not found:
         return jsonify({"status": "error", "message": "Purchase not found"}), 404
 
-    save_to_file(purchase_file, purchases)
-    return jsonify({"status": "success", "message": "Purchase updated successfully!",
-    "purchases":purchases
+    save_to_file(user_file, users)
+    
+    # Get updated purchases for this user
+    user = next((u for u in users if u["email"] == user_email), None)
+    purchases = user.get("purchases", []) if user else []
+    
+    return jsonify({
+        "status": "success",
+        "message": "Purchase updated successfully!",
+        "purchases": purchases
     }), 200
-
-
-
 
 @app.route("/delete_purchase", methods=["DELETE"])
 def delete_purchase():
-    data = request.get_json()
+    if "user_email" not in session:
+        return jsonify({"status": "error", "message": "Please login first"}), 401
     
-    # Use purchase_file variable here instead of "file.json"
-    purchases_data = get_file(purchase_file)
-    purchases = [Purchase(p["name"], p["amount"], p["date"]) for p in purchases_data]
-
-    # Get the data from request
+    data = request.get_json()
     name = data.get("name")
     amount = data.get("amount")
     date = data.get("date")
     
-    # Debug: Print what we're looking for and what we have
-    print(f"Looking for: name={name} ({type(name)}), amount={amount} ({type(amount)}), date={date} ({type(date)})")
-    for i, p in enumerate(purchases):
-        print(f"Purchase {i}: name={p.name} ({type(p.name)}), amount={p.amount} ({type(p.amount)}), date={p.date} ({type(p.date)})")
+    user_email = session["user_email"]
+    users = get_file(user_file)
     
     deleted = False
-    updated_purchases = []
-    
-    for p in purchases:
-        p_amount = float(p.amount) if isinstance(p.amount, (int, float, str)) else p.amount
-        req_amount = float(amount) if isinstance(amount, (int, float, str)) else amount
-        if not deleted and p.name == name and p_amount == req_amount and p.date == date:
-            deleted = True
-            continue
-        updated_purchases.append(p)
+    for user in users:
+        if user["email"] == user_email:
+            purchases = user.get("purchases", [])
+            updated_purchases = []
+            
+            for p in purchases:
+                p_amount = float(p["amount"]) if isinstance(p["amount"], (int, float, str)) else p["amount"]
+                req_amount = float(amount) if isinstance(amount, (int, float, str)) else amount
+                
+                if not deleted and p["name"] == name and p_amount == req_amount and p["date"] == date:
+                    deleted = True
+                    continue
+                updated_purchases.append(p)
+            
+            user["purchases"] = updated_purchases
+            break
 
     if not deleted:
         return jsonify({
@@ -163,14 +232,14 @@ def delete_purchase():
             "message": "Purchase not found",
             "searched_for": {"name": name, "amount": amount, "date": date}
         }), 404
-    save_to_file(purchase_file, [p.to_dict() for p in updated_purchases])
-
+    
+    save_to_file(user_file, users)
+    
     return jsonify({
         "status": "success",
         "message": "Purchase deleted successfully!",
-        "purchases": [p.to_dict() for p in updated_purchases]
+        "purchases": updated_purchases
     }), 200
-
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
@@ -206,13 +275,13 @@ def add_user():
     new_user = {
         "name": name,
         "email": email,
-        "password": password
+        "password": password,
+        "purchases": []
     }
     users.append(new_user)
-    save_to_file(user_file,users)
+    save_to_file(user_file, users)
 
     return jsonify({"status": "success", "redirect": "/login"}), 200
-
 
 @app.route("/login_user", methods=["POST"])
 def login_user():
@@ -231,9 +300,20 @@ def login_user():
 
     if not found_user:
         return jsonify({"status": "error", "message": "Invalid email or password"}), 401
+    
+    session.clear()
+    session["user_email"] = email
+    session["user_name"] = found_user["name"]
+    session.permanent = True
 
-    return jsonify({"status": "success", "redirect": "/"}), 200
-
+    return jsonify({
+        "status": "success",
+        "redirect": "/",
+        "user": {
+            "name": found_user["name"],
+            "email": email
+        }
+    }), 200
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

@@ -10,15 +10,76 @@ const totalTextSpan = document.querySelector(".total-text span");
 
 let budgetCardDiv;
 
-// Load saved data
-export let totalBudget = localStorage.getItem("totalBudget") ? parseFloat(localStorage.getItem("totalBudget")) : null;
-export let remainingBudget = localStorage.getItem("remainingBudget") ? parseFloat(localStorage.getItem("remainingBudget")) : null;
-export let totalSpent = localStorage.getItem("totalSpend") ? parseFloat(localStorage.getItem("totalSpend")) : 0;
-export let isOverBudget = localStorage.getItem("isOverBudget") === "true";
+export async function isUserLoggedIn() {
+    try {
+        const response = await fetch("http://127.0.0.1:5000/check_auth", {
+            method: "GET",
+            credentials: "include"
+        });
+        const data = await response.json();
+        if (!data.response=="warning") {
+            Swal.fire({
+                icon: "warning",
+                title: data.message,
+                confirmButtonColor: "#4f46e5"
+            }).then(() => {
+                window.location.href = data.redirect;
+            });
+            return false;
+        }
+        return true;
+    } catch (err) {
+        console.error("Error checking login:", err);
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Could not verify login status",
+            confirmButtonColor: "#4f46e5"
+        });
+        return false;
+    }
+}
+
+
+// ------------------ Get current user ------------------
+
+let userEmail = localStorage.getItem("userEmail");
+
+
+
+// ------------------ User-specific storage helpers ------------------
+function getUserData() {
+    const email = localStorage.getItem("userEmail");
+    if (!email) return null; // no user logged in
+
+    const data = localStorage.getItem("userBudgets");
+    const budgets = data ? JSON.parse(data) : {};
+    return budgets[email] || { totalBudget: null, remainingBudget: null, totalSpent: 0, isOverBudget: false };
+}
+
+
+function setUserData(data) {
+    if (!userEmail) return;
+    const budgets = localStorage.getItem("userBudgets") ? JSON.parse(localStorage.getItem("userBudgets")) : {};
+    budgets[userEmail] = data;
+    localStorage.setItem("userBudgets", JSON.stringify(budgets));
+}
+
+// ------------------ Load saved data ------------------
+
+
+
+// Load saved data for current user
+let userData = getUserData() || { totalBudget: null, remainingBudget: null, totalSpent: 0, isOverBudget: false };
+
+export let totalBudget = userData.totalBudget;
+export let remainingBudget = userData.remainingBudget;
+export let totalSpent = userData.totalSpent;
+export let isOverBudget = userData.isOverBudget;
 
 
 // Initialize total display
-if (totalTextSpan) totalTextSpan.textContent = `$${totalSpent.toFixed(2)}`;
+if (totalTextSpan) totalTextSpan.textContent = `$${(totalSpent ?? 0).toFixed(2)}`;
 
 // ------------------ Remove Budget Button ------------------
 let removeBudgetBtn = document.createElement("button");
@@ -67,16 +128,18 @@ if (budgetFormPopup) {
     });
 }
 
+
 // ------------------ Remove Budget Logic ------------------
 if (removeBudgetBtn) {
     removeBudgetBtn.addEventListener("click", () => {
         totalBudget = null;
         remainingBudget = null;
+        
+        // Keep totalSpent intact
+        isOverBudget = false;
 
-
-        localStorage.removeItem("totalBudget");
-        localStorage.removeItem("remainingBudget");
-        localStorage.removeItem("isOverBudget");
+        // Update user object in localStorage
+        setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
         if (budgetCardDiv) {
             budgetCardDiv.remove();
@@ -87,6 +150,7 @@ if (removeBudgetBtn) {
         closeBudgetForm();
     });
 }
+
 
 // ------------------ Budget Card ------------------
 export function createBudgetCard() {
@@ -132,9 +196,6 @@ export function createBudgetCard() {
     checkOverBudget();
 }
 
-
-
-
 // ------------------ Check / Over-Budget ------------------
 export function checkOverBudget() {
     if (!budgetCardDiv || totalBudget === null) return;
@@ -160,25 +221,34 @@ export function checkOverBudget() {
         if (budgetCardDiv) budgetCardDiv.style.background = "";
     }
 
-    localStorage.setItem("isOverBudget", isOverBudget);
+    setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 }
-
-
 
 // ------------------ Save Budget ------------------
 if (saveBtn) {
-    saveBtn.addEventListener("click", () => {
+    saveBtn.addEventListener("click", async () => {
+        // Check if user is logged in
+        if (!userEmail) {
+            Swal.fire({
+                icon: "warning",
+                title: "No user logged in",
+                text: "Please login before setting a budget",
+                confirmButtonColor: "#4f46e5"
+            });
+            return;
+        }
+
         if (!budgetInput) return;
         const value = parseFloat(budgetInput.value);
         if (isNaN(value) || value <= 0) return;
 
         totalBudget = value;
-        remainingBudget=value - totalSpent;
+        remainingBudget = value - totalSpent;
+        if (remainingBudget < 0) remainingBudget = 0;
 
-        localStorage.setItem("totalBudget", totalBudget);
-        localStorage.setItem("remainingBudget", remainingBudget);
-        localStorage.setItem("totalSpend", totalSpent);
-        localStorage.setItem("isOverBudget", false);
+        isOverBudget = totalSpent > totalBudget;
+
+        setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
         createBudgetCard();
         closeBudgetForm();
@@ -186,29 +256,24 @@ if (saveBtn) {
 }
 
 
-
-// ------------------ Update Budget After a Purchase ------------------
+// ------------------ Add Purchase ------------------
 export function addPurchase(amountValue) {
-    const amount = parseFloat(amountValue); // ensure it's a number
+    const amount = parseFloat(amountValue);
     if (isNaN(amount) || amount <= 0) return false;
 
     totalSpent += amount;
     remainingBudget = totalBudget - totalSpent;
     if (remainingBudget < 0) remainingBudget = 0;
 
-    // Save in localStorage
-    localStorage.setItem("totalSpend", totalSpent);
-    localStorage.setItem("remainingBudget", remainingBudget);
+    setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
-    // Update UI immediately
     if (totalTextSpan) totalTextSpan.textContent = `$${totalSpent.toFixed(2)}`;
     if (budgetCardDiv) checkOverBudget();
 
     return true;
 }
 
-// ------------------ Reusable Budget Update Function ------------------
-
+// ------------------ Update Budget from Purchases ------------------
 export function updateBudget(purchases) {
     let newTotal = 0;
 
@@ -220,16 +285,19 @@ export function updateBudget(purchases) {
     remainingBudget = totalBudget - totalSpent;
     if (remainingBudget < 0) remainingBudget = 0;
 
-    // Update UI
     if (totalTextSpan) totalTextSpan.textContent = `$${totalSpent.toFixed(2)}`;
 
-    // Update localStorage
-    localStorage.setItem("totalSpend", totalSpent);
-    localStorage.setItem("remainingBudget", remainingBudget);
+    setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
-    // Update budget card / progress bar
     checkOverBudget();
 }
+
+export function clearCurrentUser() {
+
+    localStorage.removeItem("userEmail");
+}
+
+
 
 // ------------------ Load ------------------
 if (totalBudget !== null && remainingBudget !== null) createBudgetCard();

@@ -20,6 +20,7 @@
                 <li><img src="{{ url_for('static', filename='images/list.png') }}" alt="list"class='list-icon'><a href="{{ url_for('menu') }}">View All</a></li>
                 <li> <a href="{{ url_for('login') }}">Login</a></li>
                 <li> <a href="{{ url_for('signup') }}">Sign up</a></li>
+                <li><img id="logout-btn" src="{{ url_for('static', filename='images/logout.png') }}" alt="logout" class="logout-icon"></li>
             </ul>
         </nav>
 
@@ -75,6 +76,7 @@
         </form>
     </div>
     <script type="module" src="{{ url_for('static', filename='js/add.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/user.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script type="module" src="{{ url_for('static', filename='js/budget.js') }}"></script>
 </body>
