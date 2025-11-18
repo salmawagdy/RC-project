@@ -44,11 +44,6 @@ def signup():
 
 @app.route("/logout", methods=["POST"])
 def logout():
-    if "user_email" not in session:  
-        return jsonify({
-            "status": "warning",
-            "message": "Already logged out"
-        })
     session.clear()
     return jsonify({
         "status": "success",
