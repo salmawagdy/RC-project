@@ -20,6 +20,7 @@ user_file = os.path.join(BASE_DIR, 'db', 'users.json')
 def homePage():
     return render_template("index.html")
 
+
 @app.route("/menu")
 def menu():
     if "user_email" not in session:
@@ -28,8 +29,10 @@ def menu():
     users = get_file(user_file)
     user = next((u for u in users if u["email"] == user_email), None)
     purchases = user.get("purchases", []) if user else []
+    purchases_reversed = list(reversed(purchases))
     
-    return render_template('menu.html', purchases=purchases)
+    
+    return render_template('menu.html', purchases=purchases_reversed)
 
 @app.route("/login")
 def login():
