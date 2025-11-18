@@ -18,9 +18,14 @@
             <ul>
                 <li><img src="{{ url_for('static', filename='images/moon.png') }}" alt="mode"class='mode-icon'></li>
                 <li><img src="{{ url_for('static', filename='images/list.png') }}" alt="list"class='list-icon'><a href="{{ url_for('menu') }}">View All</a></li>
-                <li> <a href="{{ url_for('login') }}">Login</a></li>
-                <li> <a href="{{ url_for('signup') }}">Sign up</a></li>
-                <li><img id="logout-btn" src="{{ url_for('static', filename='images/logout.png') }}" alt="logout" class="logout-icon"></li>
+    {% if session.get('user_email') %}
+        <li><img id="logout-btn" src="{{ url_for('static', filename='images/logout.png') }}" alt="logout" class="logout-icon"></li>
+    {% else %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('signup') }}">Sign up</a></li>
+    {% endif %}
+</ul>
+
             </ul>
         </nav>
 

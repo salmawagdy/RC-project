@@ -241,8 +241,10 @@ ul li:nth-child(5){
     border-radius: 15px;
     align-content: center;
 }
-
-
+.pass-valid{
+    margin-left:25px;
+    color:red;
+}
 .form-text{
     display:flex;
     width:90%;
@@ -281,6 +283,7 @@ ul li:nth-child(5){
 .login-navigation a{
     color:#4f46e5;
     text-decoration: underline;
+
 }
 
 h3{

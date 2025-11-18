@@ -91,7 +91,7 @@ if (form) {
                 Swal.fire({
                     icon: data.status === "warning" ? "warning" : "error",
                     title: data.message,
-                    confirmButtonColor: "#4f46e5"
+                    confirmButtonColor: "#4f46e5"   
                 });
             }
         })

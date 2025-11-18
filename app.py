@@ -18,7 +18,7 @@ user_file = os.path.join(BASE_DIR, 'db', 'users.json')
 
 @app.route("/")
 def homePage():
-    return render_template("index.html")
+    return render_template("index.html", user=session.get("user_email"))
 
 
 @app.route("/menu")
@@ -30,7 +30,7 @@ def menu():
     user = next((u for u in users if u["email"] == user_email), None)
     purchases = user.get("purchases", []) if user else []
     purchases_reversed = list(reversed(purchases))
-    
+
     
     return render_template('menu.html', purchases=purchases_reversed)
 
@@ -41,12 +41,6 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
-
-@app.route("/check_auth", methods=["GET"])
-def check_auth():
-    if "user_email" not in session:
-        return jsonify({"status": "warning", 'message':"Please login first "}), 401
-
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -265,7 +259,7 @@ def add_user():
         return jsonify({"status": "error", "message": "Passwords do not match"}), 400
 
     if not user.is_valid_password(password):
-        return jsonify({"status": "error", "message": "Password must have 8+ chars, uppercase, lowercase, number, special char"}), 400
+        return jsonify({"status": "error", "message": "Password must have 8+ chars, uppercase, lowercase, number, special character"}), 400
 
     if not user.is_valid_email(email):
         return jsonify({"status": "error", "message": "Invalid email"}), 400
@@ -306,7 +300,7 @@ def login_user():
     
     session.clear()
     session["user_email"] = email
-    session["user_name"] = found_user["name"]
+    session["user"] = found_user["name"]
     session.permanent = True
 
     return jsonify({

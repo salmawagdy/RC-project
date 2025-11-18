@@ -32,28 +32,13 @@
                 "date": "2025-11-04"
             },
             {
-                "name": "ssss",
-                "amount": 100.0,
-                "date": "2025-11-04"
-            },
-            {
-                "name": "gas",
-                "amount": 50,
-                "date": "2025-11-18"
-            },
-            {
-                "name": "gas",
-                "amount": 10.0,
-                "date": "2025-11-18"
-            },
-            {
-                "name": "gas",
+                "name": "Coffee",
                 "amount": 200.0,
                 "date": "2025-11-18"
             },
             {
-                "name": "gas",
-                "amount": 1000.0,
+                "name": "Coffee",
+                "amount": 200.0,
                 "date": "2025-11-18"
             }
         ]
@@ -63,5 +48,41 @@
         "email": "uou@gmail.com",
         "password": "Salma@123",
         "purchases": []
+    },
+    {
+        "name": "@@@",
+        "email": "a123@something.com",
+        "password": "@$fF1234",
+        "purchases": [
+            {
+                "name": "sugar",
+                "amount": 35.0,
+                "date": "2025-11-17"
+            }
+        ]
+    },
+    {
+        "name": "Rawan",
+        "email": "rawan.dev@hotmail.com",
+        "password": "Salma@123",
+        "purchases": [
+            {
+                "name": "Coffee",
+                "amount": 200.0,
+                "date": "2025-11-18"
+            }
+        ]
+    },
+    {
+        "name": "fatma amin",
+        "email": "fatma@gmail.com",
+        "password": "F@tma2020t",
+        "purchases": [
+            {
+                "name": "food",
+                "amount": 200.0,
+                "date": "2025-11-17"
+            }
+        ]
     }
 ]
