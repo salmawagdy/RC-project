@@ -12,6 +12,7 @@ let countText = document.querySelector(".menu-text p span");
 
 
 
+
 fetch("http://127.0.0.1:5000/purchase_count", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -26,6 +27,9 @@ fetch("http://127.0.0.1:5000/purchase_count", {
     }
 })
 .catch(error => console.error("Error fetching purchase count:", error));
+
+
+
 
 updateBtn.forEach((updateBtn) => {
     updateBtn.addEventListener("click", async(e) => {
@@ -112,9 +116,9 @@ updateBtn.forEach((updateBtn) => {
                     });
                 } else {
                     Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: data.message || "Failed to update purchase"
+                        icon: data.status === "warning" ? "warning" : "error",
+                        title: data.message || "failed to update purchase",
+                        confirmButtonColor: "#4f46e5"
                     });
                 }
             })
@@ -184,6 +188,7 @@ deleteBtn.forEach((deleteBtn) => {
                             icon: "error",
                             title: "Error",
                             text: data.message || "Failed to delete purchase"
+
                         });
                     }
                 })

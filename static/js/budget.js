@@ -136,7 +136,7 @@ export function createBudgetCard() {
             <button id="edit-budget">Edit</button>
         </div>
         <div class="budget-remaining">
-            Remaining: <span id="remaining-budget">$${remainingBudget.toFixed(2)}</span>
+            Balance: <span id="remaining-budget">$${remainingBudget.toFixed(2)}</span>
         </div>
         <div class="budget-progress">
             <div class="progress-bar">
@@ -214,11 +214,13 @@ if (saveBtn) {
     saveBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         
-        if (!userEmail) {
+         if (!userEmail) {
             Swal.fire({
                 icon: "warning",
-                title: "Pease login first",
+                title: "Please login first",
                 confirmButtonColor: "#4f46e5"
+            }).then(() => {
+                closeBudgetForm();
             });
             return;
         }

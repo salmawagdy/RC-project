@@ -1,140 +1,45 @@
 [
     {
         "name": "salma",
-        "email": "salma@gmail.com",
-        "password": "Salma@123",
-        "purchases": [
-            {
-                "name": "ssss",
-                "amount": 100.0,
-                "date": "2025-11-04"
-            },
-            {
-                "name": "ssss",
-                "amount": 100.0,
-                "date": "2025-11-04"
-            },
-            {
-                "name": "ssss",
-                "amount": 100.0,
-                "date": "2025-11-04"
-            }
-        ]
-    },
-    {
-        "name": "salma",
         "email": "salmawagdy227@gmail.com",
         "password": "Salma@123",
         "purchases": [
             {
-                "name": "Coffee",
-                "amount": 200.0,
-                "date": "2025-11-18"
+                "name": "Salma Wagdy",
+                "amount": 50.0,
+                "date": "2025-11-05"
             },
             {
-                "name": "Coffee",
-                "amount": 200.0,
-                "date": "2025-11-18"
-            },
-            {
-                "name": "mkn",
-                "amount": 454.0,
+                "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt utt",
+                "amount": 500,
                 "date": "2025-11-04"
             }
         ]
     },
     {
-        "name": "fares",
-        "email": "uou@gmail.com",
-        "password": "Salma@123",
-        "purchases": []
-    },
-    {
-        "name": "@@@",
-        "email": "a123@something.com",
-        "password": "@$fF1234",
-        "purchases": [
-            {
-                "name": "sugar",
-                "amount": 35.0,
-                "date": "2025-11-17"
-            }
-        ]
-    },
-    {
-        "name": "Rawan",
-        "email": "rawan.dev@hotmail.com",
-        "password": "Salma@123",
-        "purchases": [
-            {
-                "name": "Coffee",
-                "amount": 200.0,
-                "date": "2025-11-18"
-            }
-        ]
-    },
-    {
-        "name": "fatma amin",
-        "email": "fatma@gmail.com",
-        "password": "F@tma2020t",
-        "purchases": [
-            {
-                "name": "food",
-                "amount": 200.0,
-                "date": "2025-11-17"
-            }
-        ]
-    },
-    {
-        "name": "Abdullah",
-        "email": "abdullah@wemaad.net",
-        "password": "Te$t123123",
-        "purchases": []
-    },
-    {
-        "name": "Abdullah",
+        "name": "sarsora",
         "email": "sara@gmail.com",
         "password": "Salma@123",
         "purchases": [
             {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-06"
+                "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut.jjjj",
+                "amount": 50.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididun",
+                "amount": 50.0,
+                "date": "2025-11-04"
+            },
+            {
+                "name": "Salma Wagdy",
+                "amount": 80,
+                "date": "2025-11-04"
             },
             {
                 "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-05"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-05"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-05"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-05"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-05"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-11"
-            },
-            {
-                "name": "ssss",
-                "amount": 454.0,
-                "date": "2025-11-06"
+                "amount": 80,
+                "date": "2025-11-12"
             }
         ]
     }

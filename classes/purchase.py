@@ -17,6 +17,9 @@ class Purchase:
             return float(self.amount) > 0
         except (ValueError, TypeError):
             return False
+    
+    def check_length(self):
+        return len(self.name) < 100
 
     def date_is_valid(self):
         try:

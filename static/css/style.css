@@ -384,11 +384,18 @@ input{
 }
 .purchase-items li{
     background:none !important;
-    width: 80px !important;
 }
-.purchase-list li {
+
+.date-text{
+    width:80px !important;
+}
+.name-text{
+    width:300px !important;
+}
+.purchase-list li  {
     background:none !important;
 }
+
 
 .alternate-text{
     margin-left:25px;

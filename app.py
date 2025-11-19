@@ -60,9 +60,8 @@ def menu():
     users = get_file(user_file)
     user = next((u for u in users if u["email"] == user_email), None)
     purchases = user.get("purchases", []) if user else []
-    purchases_reversed = list(reversed(purchases))
 
-    return render_template('menu.html', purchases=purchases_reversed,user=session.get("user_email"))
+    return render_template('menu.html', purchases=purchases,user=session.get("user_email"))
 
 
 @app.route("/login")
@@ -102,16 +101,16 @@ def add_user():
         return jsonify({"status": "warning", "message": "Missing information"}), 400
 
     if not user.username_is_string(name):
-        return jsonify({"status": "error", "message": "Name cannot be only numbers"}), 400
+        return jsonify({"status": "warning", "message": "Name cannot be only numbers"}), 400
 
     if not user.passwords_match(password, confirm_password):
-        return jsonify({"status": "error", "message": "Passwords do not match"}), 400
+        return jsonify({"status": "warning", "message": "Passwords do not match"}), 400
 
     if not user.is_valid_password(password):
-        return jsonify({"status": "error", "message": "Password must have 8+ chars, uppercase, lowercase, number, special character"}), 400
+        return jsonify({"status": "warning", "message": "Password must have 8+ chars, uppercase, lowercase, number, special character"}), 400
 
     if not user.is_valid_email(email):
-        return jsonify({"status": "error", "message": "Invalid email"}), 400
+        return jsonify({"status": "warning", "message": "Invalid email"}), 400
 
     users = get_file(user_file)  
 
@@ -165,11 +164,10 @@ def login_user():
 
 #-------------------------------------------Purchase APIs-------------------------------------------------
 
-
 @app.route("/add_purchase", methods=["POST"])
 def add_purchase():
     if "user_email" not in session:
-        return jsonify({"status": "warning", 'message':"Please login first "})
+        return jsonify({"status": "warning", 'message': "Please login first"})
     
     data = request.get_json()
     name = data.get('name')
@@ -181,11 +179,14 @@ def add_purchase():
     if purchase.is_empty(name, amount, date):
         return jsonify({"status": "warning", "message": "Missing information"}), 400
     
+    if not purchase.check_length():
+        return jsonify({"status": "warning", "message": "Purchase name must be less than 100 characters"}), 400
+
     if not purchase.name_is_string():
-        return jsonify({"status": "error", "message": "Name cannot be only numbers"}), 400
+        return jsonify({"status": "warning", "message": "Name cannot be only numbers"}), 400
     
     if not purchase.amount_positive():
-        return jsonify({"status": "error", "message": "Amount should be postive number"}), 400
+        return jsonify({"status": "error", "message": "Amount should be positive number"}), 400
     
     if not purchase.date_is_valid():
         return jsonify({"status": "error", "message": "Date cannot be in the future"}), 400
@@ -197,13 +198,22 @@ def add_purchase():
         if user["email"] == user_email:
             if "purchases" not in user:
                 user["purchases"] = []
-            user["purchases"].append(purchase.to_dict())
+            
+            if any(p["name"] == name for p in user["purchases"]):
+                return jsonify({"status": "error", "message": "Purchase name must be unique"}), 400
+
+            user["purchases"].insert(0, purchase.to_dict())
             break
     
     save_to_file(user_file, users)
+    
     purchases = user.get("purchases", [])
-
-    return jsonify({"status": "success", "message": "Purchase added successfully!","purchases": purchases }), 200
+    
+    return jsonify({
+        "status": "success",
+        "message": "Purchase added successfully!",
+        "purchases": purchases
+    }), 200
 
 
 
@@ -244,14 +254,17 @@ def update_purchase():
     if purchase.is_empty(new_name, amount, date):
         return jsonify({"status": "warning", "message": "Missing information"}), 400
     
+    if not purchase.check_length():
+        return jsonify({"status": "warning", "message": "Purchase name must be less than 100 characters"}), 400
+    
     if not purchase.name_is_string():
-        return jsonify({"status": "error", "message": "Name cannot be only numbers"}), 400
+        return jsonify({"status": "warning", "message": "Name cannot be only numbers"}), 400
     
     if not purchase.amount_positive():
-        return jsonify({"status": "error", "message": "Amount should be positive number"}), 400
+        return jsonify({"status": "warning", "message": "Amount should be positive number"}), 400
     
     if not purchase.date_is_valid():
-        return jsonify({"status": "error", "message": "Date cannot be in the future"}), 400
+        return jsonify({"status": "warning", "message": "Date cannot be in the future"}), 400
 
     user_email = session["user_email"]
     users = get_file(user_file)
@@ -271,12 +284,16 @@ def update_purchase():
 
     if not found:
         return jsonify({"status": "error", "message": "Purchase not found"}), 404
+    
 
+    for p in user["purchases"]:
+        if p["name"] == new_name and p["name"] != old_name:
+            return jsonify({"status": "error", "message": "Purchase name must be unique"}), 400
+        
     save_to_file(user_file, users)
     
     user = next((u for u in users if u["email"] == user_email), None)
     purchases = user.get("purchases", []) if user else []
-    
     return jsonify({
         "status": "success",
         "message": "Purchase updated successfully!",
@@ -317,7 +334,6 @@ def delete_purchase():
             
             user["purchases"] = updated_purchases
             break
-
     if not deleted:
         return jsonify({
             "status": "error",
