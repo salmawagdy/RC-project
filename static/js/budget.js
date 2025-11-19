@@ -20,7 +20,7 @@ let userEmail = localStorage.getItem("userEmail");
 // ------------------ User-specific storage helpers ------------------
 function getUserData() {
     const email = localStorage.getItem("userEmail");
-    if (!email) return null; // no user logged in
+    if (!email) return null; 
 
     const data = localStorage.getItem("userBudgets");
     const budgets = data ? JSON.parse(data) : {};
@@ -37,9 +37,6 @@ function setUserData(data) {
 
 // ------------------ Load saved data ------------------
 
-
-
-// Load saved data for current user
 let userData = getUserData() || { totalBudget: null, remainingBudget: null, totalSpent: 0, isOverBudget: false };
 
 export let totalBudget = userData.totalBudget;
@@ -48,7 +45,6 @@ export let totalSpent = userData.totalSpent;
 export let isOverBudget = userData.isOverBudget;
 
 
-// Initialize total display
 if (totalTextSpan) totalTextSpan.textContent = `$${(totalSpent ?? 0).toFixed(2)}`;
 
 // ------------------ Remove Budget Button ------------------
@@ -105,10 +101,8 @@ if (removeBudgetBtn) {
         totalBudget = null;
         remainingBudget = null;
         
-        // Keep totalSpent intact
         isOverBudget = false;
 
-        // Update user object in localStorage
         setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
         if (budgetCardDiv) {
@@ -214,7 +208,7 @@ if (saveBtn) {
     saveBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         
-         if (!userEmail) {
+        if (!userEmail) {
             Swal.fire({
                 icon: "warning",
                 title: "Please login first",
