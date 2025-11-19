@@ -5,13 +5,18 @@
         "password": "Salma@123",
         "purchases": [
             {
-                "name": "Salma Wagdy",
+                "name": "Salma Wagdyy",
                 "amount": 50.0,
                 "date": "2025-11-05"
             },
             {
+                "name": "Salma Wagdy",
+                "amount": 50,
+                "date": "2025-11-05"
+            },
+            {
                 "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt utt",
-                "amount": 500,
+                "amount": 50,
                 "date": "2025-11-04"
             }
         ]
