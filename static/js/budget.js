@@ -4,8 +4,6 @@ const budgetInput = document.getElementById("budget-input");
 const saveBtn = document.getElementById("budget-btn");
 const closeBtn = document.querySelector(".close-btn");
 const budgetForm = document.querySelector(".budget-form");
-const purchaseForm = document.getElementById("purchase-form");
-const amountInput = document.getElementById("amount");
 const totalTextSpan = document.querySelector(".total-text span");
 
 let budgetCardDiv;
@@ -16,8 +14,8 @@ let budgetCardDiv;
 let userEmail = localStorage.getItem("userEmail");
 
 
-
 // ------------------ User-specific storage helpers ------------------
+
 function getUserData() {
     const email = localStorage.getItem("userEmail");
     if (!email) return null; 
@@ -68,6 +66,7 @@ function hideRemoveBudgetBtn() {
 }
 
 // ------------------ Popup Logic ------------------
+
 export function openBudgetForm() {
     if (!budgetFormPopup) return;
     budgetFormPopup.style.opacity = "1";
@@ -96,11 +95,11 @@ if (budgetFormPopup) {
 
 
 // ------------------ Remove Budget Logic ------------------
+
 if (removeBudgetBtn) {
     removeBudgetBtn.addEventListener("click", () => {
         totalBudget = null;
         remainingBudget = null;
-        
         isOverBudget = false;
 
         setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
@@ -117,6 +116,7 @@ if (removeBudgetBtn) {
 
 
 // ------------------ Budget Card ------------------
+
 export function createBudgetCard() {
     if (!budgetBox || totalBudget === null || remainingBudget === null) return;
 

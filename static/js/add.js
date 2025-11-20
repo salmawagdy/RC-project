@@ -84,7 +84,6 @@ if (form) {
                 if (countText) 
                     {countText.textContent = data.purchases.length
                 }
-                console.log(countText)
                 Swal.fire({
                     icon: "success",
                     title: "Purchase added successfully!",

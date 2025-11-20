@@ -5,6 +5,11 @@
         "password": "Salma@123",
         "purchases": [
             {
+                "name": "Salma Wagdyyyyyy",
+                "amount": 900.0,
+                "date": "2025-11-05"
+            },
+            {
                 "name": "Salma Wagdyy",
                 "amount": 50.0,
                 "date": "2025-11-05"
