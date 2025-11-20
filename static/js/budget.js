@@ -256,7 +256,6 @@ export function addPurchase(amountValue) {
 
     totalSpent += amount;
     remainingBudget = totalBudget - totalSpent;
-    if (remainingBudget < 0) remainingBudget = 0;
 
     setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
 
