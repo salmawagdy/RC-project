@@ -200,7 +200,7 @@ def add_purchase():
                 user["purchases"] = []
             
             if any(p["name"] == name for p in user["purchases"]):
-                return jsonify({"status": "error", "message": "Purchase name must be unique"}), 400
+                return jsonify({"status": "error", "message": "Purchase name must be unique"})
 
             user["purchases"].insert(0, purchase.to_dict())
             break

@@ -162,9 +162,9 @@ export function createBudgetCard() {
 
 
 // ------------------ Check / Over-Budget ------------------
+
 export function checkOverBudget() {
     if (!budgetCardDiv || totalBudget === null) return;
-
     const overBudgetText = budgetCardDiv.querySelector("#over-budget-text");
     const remainingSpan = budgetCardDiv.querySelector("#remaining-budget");
     const progressFill = budgetCardDiv.querySelector("#progress-fill");
@@ -183,7 +183,6 @@ export function checkOverBudget() {
             remainingSpan.textContent = `$${remainingBudget.toFixed(2)}`;
         }
     }
-
     
     if (progressFill) progressFill.style.width = `${barPercent}%`;
 
@@ -275,7 +274,6 @@ export function updateBudget(purchases) {
 
     totalSpent = newTotal;
     remainingBudget = totalBudget - totalSpent;
-    if (remainingBudget < 0) remainingBudget = 0;
 
     if (totalTextSpan) totalTextSpan.textContent = `$${totalSpent.toFixed(2)}`;
 
