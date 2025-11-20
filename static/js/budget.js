@@ -236,7 +236,6 @@ if (saveBtn) {
         
         totalBudget = value;
         remainingBudget = value - totalSpent;
-        if (remainingBudget < 0) remainingBudget = 0;
         isOverBudget = totalSpent > totalBudget;
         setUserData({ totalBudget, remainingBudget, totalSpent, isOverBudget });
         createBudgetCard();
@@ -265,6 +264,7 @@ export function addPurchase(amountValue) {
 }
 
 // ------------------ Update Budget from Purchases ------------------
+
 export function updateBudget(purchases) {
     let newTotal = 0;
 
